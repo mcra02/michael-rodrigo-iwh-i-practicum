@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  h1 Maquinarias Update Form | HubSpot I Practicum Integration
+  a.button-link(href="/") Back to homepage
+  form(action="/update-cobj" method="POST")
+    div
+      label(for="estado_de_la_maquinaria") Machinery Status:
+      select(name="estado_de_la_maquinaria" required)
+        option(value="") Select an option
+        option(value="En uso") In use
+        option(value="En reparacion") Under repair
+        option(value="En almacen") In storage
+        option(value="Vendida") Sold
+    div
+      label(for="tipo_de_maquinaria") Machinery Type:
+      select(name="tipo_de_maquinaria" required)
+        option(value="") Select an option
+        option(value="Excavadora") Excavator
+        option(value="Generador") Generator
+        option(value="Grua") Crane
+    div
+      label(for="nombre") Name:
+      input(type="text" name="nombre" required)
+    div
+      button(type="submit") Add/Update

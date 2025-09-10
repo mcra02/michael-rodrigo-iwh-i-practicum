@@ -8,19 +8,60 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // * Please DO NOT INCLUDE the private app access token in your repo. Don't do this practicum in your normal account.
-const PRIVATE_APP_ACCESS = '';
 
-// TODO: ROUTE 1 - Create a new app.get route for the homepage to call your custom object data. Pass this data along to the front-end and create a new pug template in the views folder.
+const PRIVATE_APP_ACCESS = process.env.PRIVATE_APP_ACCESS || '';
+const YOUR_OBJECT_TYPE = '2-49896952'; // Ejemplo: '2-49896952' (reemplaza con tu propio id de objeto personalizado)
 
-// * Code for Route 1 goes here
+// Ruta para la página de inicio: obtiene los objetos personalizados y los muestra en homepage.pug
+app.get('/', async (req, res) => {
+    const customObjectsUrl = `https://api.hubapi.com/crm/v3/objects/${YOUR_OBJECT_TYPE}?properties=estado_de_la_maquinaria&properties=tipo_de_maquinaria&properties=nombre`;
+    const headers = {
+        Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
+        'Content-Type': 'application/json'
+    };
+    try {
+        const resp = await axios.get(customObjectsUrl, { headers });
+        const data = resp.data.results || [];
+        res.render('homepage', {
+            title: 'Lista de objetos personalizados',
+            data
+        });
+    } catch (error) {
+        console.error(error);
+        res.render('homepage', {
+            title: 'Lista de objetos personalizados',
+            data: []
+        });
+    }
+});
 
-// TODO: ROUTE 2 - Create a new app.get route for the form to create or update new custom object data. Send this data along in the next route.
+// Ruta para mostrar el formulario HTML en la plantilla pug "actualizaciones"
+app.get('/update-cobj', (req, res) => {
+    res.render('actualizaciones', { title: 'Actualizar formulario de objeto personalizado | Integración con HubSpot I Practicum' });
+});
 
-// * Code for Route 2 goes here
-
-// TODO: ROUTE 3 - Create a new app.post route for the custom objects form to create or update your custom object data. Once executed, redirect the user to the homepage.
-
-// * Code for Route 3 goes here
+// Ruta para procesar el formulario y crear un nuevo objeto personalizado
+app.post('/update-cobj', async (req, res) => {
+    const { estado_de_la_maquinaria, tipo_de_maquinaria, nombre } = req.body;
+    const customObjectsUrl = `https://api.hubapi.com/crm/v3/objects/${YOUR_OBJECT_TYPE}`;
+    const headers = {
+        Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
+        'Content-Type': 'application/json'
+    };
+    const payload = {
+        properties: {
+            estado_de_la_maquinaria,
+            tipo_de_maquinaria,
+            nombre
+        }
+    };
+    try {
+        await axios.post(customObjectsUrl, payload, { headers });
+    } catch (error) {
+        console.error(error);
+    }
+    res.redirect('/');
+});
 
 /** 
 * * This is sample code to give you a reference for how you should structure your calls. 

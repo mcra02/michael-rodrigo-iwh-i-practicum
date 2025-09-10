@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  h1 Maquinarias List
+  a.button-link(href="/update-cobj") Add/Update this table
+  if data.length
+    table
+      thead
+        tr
+          th Name
+          th Machinery Status
+          th Machinery Type
+      tbody
+        each obj in data
+          tr
+            td= obj.properties.nombre
+            td= obj.properties.estado_de_la_maquinaria
+            td= obj.properties.tipo_de_maquinaria
+  else
+    p No records yet.
