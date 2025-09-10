@@ -1,31 +1,48 @@
-# Welcome to the Integrating With HubSpot I: Foundations Practicum
+> **Note:** When creating or updating a record, the app sends the internal values (in Spanish) of the dropdowns to HubSpot, not the English display text. For example, 'In use' sends `En uso`, 'Excavator' sends `Excavadora`, etc.
 
-This repository is for the Integrating With HubSpot I: Foundations course. This practicum is one of two requirements for receiving your Integrating With HubSpot I: Foundations certification. You must also take the exam and receive a passing grade (at least 75%).
-
-To read the full directions, please go to the [practicum instructions](https://app.hubspot.com/academy/l/tracks/1092124/1093824/5493?language=en).
-
-**Put your HubSpot developer test account custom objects URL link here:** https://app.hubspot.com/contacts/l/objects/${custom-obj-number}/views/all/list
-
-___
-## Tips:
-- Commit to your repository often. Even if you make small tweaks to your code, it’s best to be committing to your repository frequently.
-- The subject of the custom object is up to you. Feel free to get creative!
-- Please create a test account and include your private app access token in your repo.
-- Ensure you re-merge any working branches into the main branch.
-- DO NOT ADD YOUR PRIVATE APP TOKEN TO YOUR REPOSITORY. 
-
-## Pre-requisites:
-- Using [Node](https://nodejs.org/en/download) and node packages
-- Using [Express](https://expressjs.com/en/starter/installing.html)
-- Using [Axios](https://axios-http.com/docs/intro)
-- Using [Pug templating system](https://pugjs.org/api/getting-started.html)
-- Using the command line
-- Using [Git and GitHub](https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners)
-
-## Requirements
-- All work must be your own. During the grading process we will check the revision history. Submissions that do not meet this requirement will not be considered.
-- You must have at least two new routes in your index.js file and one new pug template for the homepage.
-- You must create a developer test account and link to it in your README.md file. Submissions that do not meet this requirement will not be considered.
 
 ## Custom Object
 - [Maquinarias](https://app.hubspot.com/contacts/50475181/objects/2-49896952/views/all/list) Nombre, Estado de la maquinaria, Tipo de maquinaria
+
+## Custom Object: Maquinarias (Machinery)
+
+This project uses a custom object called **Maquinarias** (Machinery) in HubSpot. Each record represents a piece of machinery and includes the following properties:
+
+### Properties
+
+| Property Name           | Internal Name            | Type     | Description                                 | Options (if applicable)                 |
+|------------------------|-------------------------|----------|---------------------------------------------|-----------------------------------------|
+| Name                   | nombre                  | Text     | The name of the machinery                   | -                                       |
+| Machinery Status       | estado_de_la_maquinaria | Dropdown | The current status of the machinery         | In use, Under repair, In storage, Sold  |
+| Machinery Type         | tipo_de_maquinaria      | Dropdown | The type/category of the machinery          | Excavator, Generator, Crane             |
+
+#### Property Details
+- **Name (`nombre`)**: Free text field for the machinery's name.
+- **Machinery Status (`estado_de_la_maquinaria`)**: Dropdown with the following options:
+	- In use (`En uso`)
+	- Under repair (`En reparacion`)
+	- In storage (`En almacen`)
+	- Sold (`Vendida`)
+- **Machinery Type (`tipo_de_maquinaria`)**: Dropdown with the following options:
+	- Excavator (`Excavadora`)
+	- Generator (`Generador`)
+	- Crane (`Grua`)
+
+### How the App Uses These Properties
+
+- The homepage displays a table listing all machinery records, showing their Name, Status, and Type.
+- The "Add to this table" button opens a form to create a new machinery record. The form includes:
+	- A text input for Name
+	- A dropdown for Machinery Status (with the options above)
+	- A dropdown for Machinery Type (with the options above)
+- When the form is submitted, the app sends a POST request to HubSpot to create a new record with the selected values.
+
+### Example
+
+| Name         | Machinery Status | Machinery Type |
+|--------------|------------------|---------------|
+| CAT 320D     | In use           | Excavator     |
+| Honda GenX   | In storage       | Generator     |
+| Liebherr LTM | Sold             | Crane         |
+
+---

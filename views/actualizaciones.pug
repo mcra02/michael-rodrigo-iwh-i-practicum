@@ -5,6 +5,9 @@ block content
   a.button-link(href="/") Back to homepage
   form(action="/update-cobj" method="POST")
     div
+      label(for="nombre") Name:
+      input(type="text" name="nombre" required)
+    div
       label(for="estado_de_la_maquinaria") Machinery Status:
       select(name="estado_de_la_maquinaria" required)
         option(value="") Select an option
@@ -20,7 +23,4 @@ block content
         option(value="Generador") Generator
         option(value="Grua") Crane
     div
-      label(for="nombre") Name:
-      input(type="text" name="nombre" required)
-    div
-      button(type="submit") Add/Update
+      button(type="submit") Add
